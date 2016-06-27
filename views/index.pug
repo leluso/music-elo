@@ -1,0 +1,31 @@
+head
+  title= songs[0].artist + ' vs ' + songs[1].artist + ' - Elo Country'
+  link(
+    rel="stylesheet"
+    href="/bootstrap.min.css"
+  )
+
+div.container
+  h1.row.site-title Elo Country
+
+  div.row
+    each song in songs
+      span.col-sm-6.song-title
+        span.row(style="font-size: 14pt")= song.title + ' (' + song.year + ')'
+        span.row(style="font-size: 12pt")= song.artist
+        form(action="/" method="POST")
+          input(style="display:none" name="titleWinner" value=song.title)
+          input(style="display:none" name="titleLoser" value=song.other.title)
+          input(style="display:none" name="artistWinner" value=song.artist)
+          input(style="display:none" name="artistLoser" value=song.other.artist)
+          input(
+            type="submit" 
+            style="height: 30%; width:100%; font-size: 18pt;" 
+            value="Vote"
+          )
+        a(
+          target="_blank"
+          href="https://www.youtube.com/results?search_query="+song.title+' '+song.artist
+        ) Youtube search link
+
+
