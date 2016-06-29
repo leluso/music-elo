@@ -90,6 +90,19 @@ app.post('/', function(req, res) {
   });
 });
 
+app.get('/bod', function(req, res) {
+  Song.find({})
+    .sort({ points: -(req.query.flipit === undefined) || 1 })
+    .select('title artist points')
+    .exec((err, results) => {
+      if(err) console.error(err);
+      res.render('bod', {
+        records: results,
+        flipit: req.query.flipit === undefined,
+      });
+    });
+});
+
 app.listen(3000, function() {
   console.log('Listening on port 3000!');
 });

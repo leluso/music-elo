@@ -1,0 +1,31 @@
+head
+  title Elo Country Leaderboard
+  link(
+    rel="stylesheet"
+    href="/bootstrap.min.css"
+  )
+  link(
+    rel="stylesheet"
+    href="/elo.css"
+  )
+
+div.container
+  h1.row.site-title Elo Country
+
+  div.row
+    table.table.col-sm-9(
+      style="border-spacing: 2px 2px;"
+    )
+      tr
+        th Song
+        th Artist
+        if flipit == 0
+          th #[a(href="/bod") Points]
+        else
+          th #[a(href="/bod?flipit") Points]
+      each record in records
+        tr.table-row
+          td= record.title
+          td= record.artist
+          td= record.points
+      

@@ -1,0 +1,22 @@
+tr:nth-child(even) {
+  background-color: #fbfbfb;
+}
+
+tr:first-child {
+  border-bottom-color: #0f0a01;
+  border-bottom-width: 2px;
+  border-bottom-style : solid;
+}
+
+tr {
+  height: 25px;
+}
+
+a, a:hover {
+  color: black;
+}
+
+a:hover {
+  border-top: 2px solid black;
+  text-decoration: none;
+}
