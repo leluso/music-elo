@@ -4,9 +4,17 @@ head
     rel="stylesheet"
     href="/bootstrap.min.css"
   )
+  link(
+    rel="stylesheet"
+    href="/elo.css"
+  )
 
 div.container
-  h1.row.site-title Elo Country
+  div.row
+    span.col-sm-11
+      h1.site-title #[a(href="/") Elo Country]
+    span.col-sm-1
+      a(href="/bod" style="margin-top: 0.67em;") Leaderboard
 
   div.row
     each song in songs
@@ -23,9 +31,13 @@ div.container
             style="height: 30%; width:100%; font-size: 18pt;" 
             value="Vote"
           )
-        a(
+        a.row(
           target="_blank"
           href="https://www.youtube.com/results?search_query="+song.title+' '+song.artist
-        ) Youtube search link
+        ) Youtube search
+        a.row(
+          target="_blank"
+          href="https://play.google.com/music/listen?u=0#/sr/"+song.title+' '+song.artist
+        ) Google Music search
 
 
