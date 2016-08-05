@@ -15,6 +15,8 @@ let Song = mongoose.model('Song', new mongoose.Schema({
   year: Number,
   points: Number,
   first: Date,
+  wins: Number,
+  losses: Number,
 }));
 
 mongoose.connect('mongodb://localhost:27017/musicelo');
@@ -79,6 +81,8 @@ app.post('/', function(req, res) {
     winner.points = winner.points + K * (1 - winnerExpected);
     loser.points = loser.points + K * (0 - loserExpected);
 
+    winner.wins = winner.wins + 1 || 1;
+    loser.losses = loser.losses + 1 || 1;
     async.parallel([
       winner.save,
       loser.save,
@@ -90,21 +94,46 @@ app.post('/', function(req, res) {
   });
 });
 
+let lastBod = [];
+let lastBodUpdate = null;
+
 app.get('/bod', function(req, res) {
-  Song.find({})
-    .sort({ points: -(req.query.flipit === undefined) || 1 })
-    .select('title artist points')
-    .exec((err, results) => {
-      if(err) console.error(err);
-      res.render('bod', {
-        records: results,
-        flipit: req.query.flipit === undefined,
+  let now = new Date();
+  let freshPeriod = new Date().setHours(now.getHours() - 24);
+  if(!lastBodUpdate || freshPeriod > lastBodUpdate)
+  {
+    Song.find({})
+      .sort({ points: -1 })
+      .select('title artist points')
+      .exec((err, results) => {
+        lastBod = results;
+        lastBodUpdate = now;
+        if(err) console.error(err);
+        res.render('bod', {
+          records: results.sort((a, b) => {
+            if(req.query.flipit !== undefined) return a.points - b.points;
+            else return b.points - a.points;
+          }),
+          flipit: req.query.flipit === undefined,
+          lastUpdate: lastBodUpdate,
+        });
       });
+  }
+
+  else {
+    res.render('bod', {
+      records: lastBod.sort((a, b) => {
+        if(req.query.flipit !== undefined) return a.points - b.points;
+        else return b.points - a.points;
+      }),
+      flipit: req.query.flipit === undefined,
+      lastUpdate: lastBodUpdate,
     });
+  }
 });
 
-app.listen(3000, function() {
-  console.log('Listening on port 3000!');
+app.listen(3002, function() {
+  console.log('Listening on port 3002!');
 });
 
 function normalizeScore(score)
