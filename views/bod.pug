@@ -8,24 +8,33 @@ head
     rel="stylesheet"
     href="/elo.css"
   )
+ 
+  style.
+    td {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
 
 div.container
   h1.row.site-title #[a(href="/") Elo Country]
 
   div.row
-    table.table.col-sm-9(
+    table.table.col-sm-10(
       style="border-spacing: 2px 2px;"
     )
       tr
+        th #
         th Song
         th Artist
         if flipit == 0
           th #[a(href="/bod") Points]
         else
           th #[a(href="/bod?flipit") Points]
-      each record in records
+        th Last update: #[span= lastUpdate.toLocaleString()]
+      each record, index in records
         tr.table-row
+          td= index+1
           td= record.title
           td= record.artist
-          td= record.points
+          td= record.points.toFixed(3)
       
