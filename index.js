@@ -19,7 +19,7 @@ let Song = mongoose.model('Song', new mongoose.Schema({
   losses: Number,
 }));
 
-mongoose.connect('mongodb://localhost:27017/musicelo');
+mongoose.connect('mongodb://do:doinstance@ds035543.mlab.com:35543/elo');
 
 app.set('view engine', 'pug');
 app.use(express.static('public'));
@@ -130,6 +130,11 @@ app.get('/bod', function(req, res) {
       lastUpdate: lastBodUpdate,
     });
   }
+});
+
+app.get('/rebizzle', function(req, res) { 
+  res.send('I hope you realize what this is. It should only be done in important situations.');
+  process.exit(0); 
 });
 
 app.listen(3002, function() {

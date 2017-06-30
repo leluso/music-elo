@@ -19,7 +19,7 @@ div.container
   div.row
     each song in songs
       span.col-sm-6.song-title
-        span.row(style="font-size: 14pt")= song.title + ' (' + song.year + ')'
+        span.row(style="font-size: 14pt")= song.title + ' (' + song.year + ') '
         span.row(style="font-size: 12pt")= song.artist
         form(action="/" method="POST")
           input(style="display:none" name="titleWinner" value=song.title)
@@ -39,5 +39,8 @@ div.container
           target="_blank"
           href="https://play.google.com/music/listen?u=0#/sr/"+song.title+' '+song.artist
         ) Google Music search
-
+        a.row(
+           target="_blank"
+           href="https://open.spotify.com/search/results/"+song.title+' '+song.artist
+        ) Spotify (web)
 
